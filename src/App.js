@@ -10,6 +10,7 @@ const App = () => {
   const [newBlogAuthor, setNewBlogAuthor] = useState('')
   const [newBlogTitle, setNewBlogTitle] = useState('')
   const [message, setMessage] = useState(null)
+  const [messageClass, setMessageClass] = useState('')
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -42,10 +43,18 @@ const App = () => {
       ) 
       setUsername('')
       setPassword('')
-    } catch (exception) {
-      setMessage('wrong credentials')
+      setMessage(`Welcome ${user.name}`)
+      setMessageClass('add')
       setTimeout(() => {
         setMessage(null)
+        setMessageClass('')
+      }, 5000)
+    } catch (exception) {
+      setMessage('Wrong credentials')
+      setMessageClass('error')
+      setTimeout(() => {
+        setMessage(null)
+        setMessageClass('')
       }, 5000)
     }
   }
@@ -63,6 +72,12 @@ const App = () => {
         setBlogs(blogs.concat(returnedBlog))
         setNewBlogAuthor('')
         setNewBlogTitle('')
+        setMessage(`Added blog  ${returnedBlog.title} by ${returnedBlog.author}`)
+        setMessageClass('add')
+        setTimeout(() => {
+          setMessage(null)
+          setMessageClass('')
+        }, 5000)
       })
   }
 
@@ -127,7 +142,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
-      <Notification message={message}/>
+      <Notification message={message} messageClass={messageClass}/>
       {user === null ? 
       loginForm() :
       <div>

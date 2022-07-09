@@ -1,15 +1,15 @@
-const Notification = ({ message }) => {
+const Notification = ({ message, messageClass }) => {
   if (message === null) {
     return null
   }
 
-  var nameClass = "error"
+  /*var nameClass = "error"
   if (message.includes('logged')) {
     nameClass = "add"
-  }
+  }*/
 
   return (
-    <div className={nameClass}>
+    <div className={messageClass}>
       {message}
     </div>
   )
