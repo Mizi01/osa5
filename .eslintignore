@@ -1,6 +1,7 @@
 build
 .eslintrc.js
-App.js
+components
 index.js
 services
-components
+app.js
+

@@ -5,10 +5,17 @@ module.exports = {
       'node': true,
       "jest": true,
     },
-    'extends': 'eslint:recommended',
+    'extends': [
+        'eslint:recommended',
+        'plugin:react/recommended'
+    ],
     'parserOptions': {
-      'ecmaVersion': 'latest'
+      'ecmaVersion':'latest',
+      'allowImportExportEverywhere': true
     },
+    'plugins': [
+        'react','jest'
+    ],
     'rules': {
       'indent': [
         'error',
