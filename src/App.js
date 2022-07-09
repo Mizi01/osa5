@@ -9,6 +9,7 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [newBlogAuthor, setNewBlogAuthor] = useState('')
   const [newBlogTitle, setNewBlogTitle] = useState('')
+  const [newBlogUrl, setNewBlogUrl] = useState('')
   const [message, setMessage] = useState(null)
   const [messageClass, setMessageClass] = useState('')
   const [username, setUsername] = useState('') 
@@ -64,6 +65,7 @@ const App = () => {
     const blogObject = {
       author: newBlogAuthor,
       title: newBlogTitle,
+      url: newBlogUrl,
     }
 
     blogService
@@ -87,6 +89,10 @@ const App = () => {
 
   const handleBlogTitleChange = (event) => {
     setNewBlogTitle(event.target.value)
+  }
+
+  const handleBlogUrlChange = (event) => {
+    setNewBlogUrl(event.target.value)
   }
 
   const loginForm = () => (
@@ -122,7 +128,11 @@ const App = () => {
       <div>Title: <input
         value={newBlogTitle}
         onChange={handleBlogTitleChange}/>
-        </div>
+      </div>
+      <div>Url: <input
+        value={newBlogUrl}
+        onChange={handleBlogUrlChange}/>
+      </div>
       <button type="submit">save</button>
     </form>  
   )
