@@ -83,7 +83,16 @@ const App = () => {
 
   const handleDelete = (blog) => {
     window.confirm(`do you want to delete ${blog.title}?`)
-      ? blogService.remove(blog).then(updatePage())
+      ? blogService.remove(blog)
+        .then(() => {
+          updatePage()
+          setMessageClass('error')
+          setMessage(`deleted blog ${blog.title}`)
+          setTimeout(() => {
+            setMessage(null)
+            setMessageClass('')
+          }, 5000)
+        })
       : updatePage()
   }
 
