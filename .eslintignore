@@ -1,7 +1,4 @@
+node_modules
 build
 .eslintrc.js
-components
-index.js
-services
-app.js
 

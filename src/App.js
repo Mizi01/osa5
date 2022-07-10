@@ -12,14 +12,14 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [message, setMessage] = useState(null)
   const [messageClass, setMessageClass] = useState('')
-  const [username, setUsername] = useState('') 
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    updatePage()  
+    updatePage()
   }, [])
-  
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
@@ -39,7 +39,7 @@ const App = () => {
       blogService.setToken(user.token)
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
-      ) 
+      )
       setUsername('')
       setPassword('')
       setMessage(`Welcome ${user.name}`)
@@ -61,35 +61,36 @@ const App = () => {
   const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
     blogService
-    .create(blogObject)
-    .then(returnedBlog => {
-      setBlogs(blogs.concat(returnedBlog))
-      updatePage()
-      setMessage(`Added blog  ${returnedBlog.title} by ${returnedBlog.author}`)
-      setMessageClass('add')
-      setTimeout(() => {
-        setMessage(null)
-        setMessageClass('')
-      }, 5000)
-    })
+      .create(blogObject)
+      .then(returnedBlog => {
+        setBlogs(blogs.concat(returnedBlog))
+        updatePage()
+        setMessage(`Added blog  ${returnedBlog.title} by ${returnedBlog.author}`)
+        setMessageClass('add')
+        setTimeout(() => {
+          setMessage(null)
+          setMessageClass('')
+        }, 5000)
+      }
+      )
   }
 
   const handleLike = (blog) => {
     blogService
-    .like(blog)
-    .then(updatePage())
+      .like(blog)
+      .then(updatePage())
   }
 
   const handleDelete = (blog) => {
     window.confirm(`do you want to delete ${blog.title}?`)
-    ? blogService.remove(blog).then(updatePage())
-    : updatePage()
+      ? blogService.remove(blog).then(updatePage())
+      : updatePage()
   }
 
   const updatePage = () => {
     blogService
-    .getAll()
-    .then(blogs => setBlogs(blogs.sort((eka, toka) => (eka.likes > toka.likes) ? -1 : 1)))
+      .getAll()
+      .then(blogs => setBlogs(blogs.sort((eka, toka) => (eka.likes > toka.likes) ? -1 : 1)))
     console.log(blogs)
   }
 
@@ -100,9 +101,9 @@ const App = () => {
   )
 
   const logOut = () => {
-    console.log("joo")
+    console.log('joo')
     window.localStorage.clear()
-    setUser = null
+    setUser(null)
   }
 
   const blogFormRef = useRef()
@@ -111,22 +112,22 @@ const App = () => {
     <div>
       <h2>blogs</h2>
       <Notification message={message} messageClass={messageClass}/>
-      {user === null ? 
-      <Togglable buttonLabel="login">
-        <LoginForm
-          username={username}
-          password={password}
-          handleUsernameChange={({ target }) => setUsername(target.value)}
-          handlePasswordChange={({ target }) => setPassword(target.value)}
-          handleSubmit={handleLogin}
+      {user === null ?
+        <Togglable buttonLabel="login">
+          <LoginForm
+            username={username}
+            password={password}
+            handleUsernameChange={({ target }) => setUsername(target.value)}
+            handlePasswordChange={({ target }) => setPassword(target.value)}
+            handleSubmit={handleLogin}
           />
-      </Togglable> :
-      <div>
-        <p>{user.name} logged in</p>
-        <Togglable buttonLabel="new blog" ref={blogFormRef}>
-          <BlogForm createBlog={addBlog} />
-        </Togglable>
-        {logOutForm()}
+        </Togglable> :
+        <div>
+          <p>{user.name} logged in</p>
+          <Togglable buttonLabel="new blog" ref={blogFormRef}>
+            <BlogForm createBlog={addBlog} />
+          </Togglable>
+          {logOutForm()}
         </div>
       }
       {blogs.map(blog =>

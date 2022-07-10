@@ -1,24 +1,24 @@
-import { useState } from 'react' 
+import { useState } from 'react'
 
 const BlogForm = ({ createBlog }) => {
-    const [newBlogAuthor, setNewBlogAuthor] = useState('')
-    const [newBlogTitle, setNewBlogTitle] = useState('')
-    const [newBlogUrl, setNewBlogUrl] = useState('')
+  const [newBlogAuthor, setNewBlogAuthor] = useState('')
+  const [newBlogTitle, setNewBlogTitle] = useState('')
+  const [newBlogUrl, setNewBlogUrl] = useState('')
 
-    const handleBlogAuthorChange = (event) => {
-        setNewBlogAuthor(event.target.value)
-    }
+  const handleBlogAuthorChange = (event) => {
+    setNewBlogAuthor(event.target.value)
+  }
 
-    const handleBlogTitleChange = (event) => {
-        setNewBlogTitle(event.target.value)
-    }
+  const handleBlogTitleChange = (event) => {
+    setNewBlogTitle(event.target.value)
+  }
 
-    const handleBlogUrlChange = (event) => {
-        setNewBlogUrl(event.target.value)
-      }
+  const handleBlogUrlChange = (event) => {
+    setNewBlogUrl(event.target.value)
+  }
 
 
-const addBlog = (event) => {
+  const addBlog = (event) => {
     event.preventDefault()
     createBlog({
       author: newBlogAuthor,
@@ -30,12 +30,12 @@ const addBlog = (event) => {
     setNewBlogUrl('')
   }
 
-return(
+  return(
     <form onSubmit={addBlog}>
       <div>
       Author: <input
-        value={newBlogAuthor}
-        onChange={handleBlogAuthorChange}/>
+          value={newBlogAuthor}
+          onChange={handleBlogAuthorChange}/>
       </div>
       <div>Title: <input
         value={newBlogTitle}
