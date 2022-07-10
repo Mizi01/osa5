@@ -17,9 +17,7 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+    updatePage()  
   }, [])
   
   useEffect(() => {
@@ -66,6 +64,7 @@ const App = () => {
     .create(blogObject)
     .then(returnedBlog => {
       setBlogs(blogs.concat(returnedBlog))
+      updatePage()
       setMessage(`Added blog  ${returnedBlog.title} by ${returnedBlog.author}`)
       setMessageClass('add')
       setTimeout(() => {
@@ -75,29 +74,24 @@ const App = () => {
     })
   }
 
-  /*const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-          Username: <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-      </div>
-      <div>
-          Password: <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-      </div>
-      <button type="submit">login</button>
-    </form>      
-  )*/
+  const handleLike = (blog) => {
+    blogService
+    .like(blog)
+    .then(updatePage())
+  }
 
+  const handleDelete = (blog) => {
+    window.confirm(`do you want to delete ${blog.title}?`)
+    ? blogService.remove(blog).then(updatePage())
+    : updatePage()
+  }
 
+  const updatePage = () => {
+    blogService
+    .getAll()
+    .then(blogs => setBlogs(blogs.sort((eka, toka) => (eka.likes > toka.likes) ? -1 : 1)))
+    console.log(blogs)
+  }
 
   const logOutForm = () => (
     <form onSubmit={logOut}>
@@ -108,6 +102,7 @@ const App = () => {
   const logOut = () => {
     console.log("joo")
     window.localStorage.clear()
+    setUser = null
   }
 
   const blogFormRef = useRef()
@@ -135,7 +130,7 @@ const App = () => {
         </div>
       }
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} handleLike={handleLike} handleDelete={handleDelete} user={user} />
       )}
     </div>
   )
