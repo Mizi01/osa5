@@ -4,7 +4,7 @@ const Blog = ({ blog, handleLike, user, handleDelete }) => {
   const [visible, setVisible] = useState(false)
 
   /*console.log(`käyttäjä on ${user.name} ja id ${user}`)*/
-  console.log(user)
+  //console.log(user)
   /*console.log(`blogin lisääjä on ${user.name} ja blogin id ${blog.user.id}`)*/
   /*window.confirm(`are you sure you wsant delete blog: ${blog.title}?`
   */
@@ -22,7 +22,7 @@ const Blog = ({ blog, handleLike, user, handleDelete }) => {
   }
 
   if(!visible) return(
-    <div style={blogStyle}>
+    <div style={blogStyle} id='short'>
       <div>
         {blog.title} {blog.author}
       </div>
@@ -33,7 +33,7 @@ const Blog = ({ blog, handleLike, user, handleDelete }) => {
     <div style={blogStyle}>
       <div>{blog.title} {blog.author}</div>
       <div>{blog.url}</div>
-      <div>likes: {blog.likes} <button id='like-button' onClick={() => handleLike(blog)}>like</button></div>
+      <div>{blog.likes} <button id='like-button' onClick={() => handleLike(blog)}>like</button></div>
       {user !== null && blog.user.id === user.id ? <button id='delete-button' onClick={() => handleDelete(blog)}>delete</button>:<></>}
       <button onClick={toggleVisibility}>hide</button>
     </div>
